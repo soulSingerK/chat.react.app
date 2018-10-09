@@ -10,7 +10,7 @@ class Login extends React.Component {
     return (
       <div>
         <Logo></Logo>
-        <h2 style={{textAlign: 'center'}}>登录页</h2>
+        <h2 style={{textAlign: 'center'}}> 登录页 </h2>
         <WingBlank>
           <List>
             <InputItem>用户</InputItem>
