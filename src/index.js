@@ -1,30 +1,27 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-
+import { createStore, applyMiddleware, compose } from 'redux'
+import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
-import store from './redux/store'
-import TodoApp from './todoApp'
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
+
+import reducers from './reducers'
+import './axios.config'
+
+import Login from './container/login/login'
+import Register from './container/register/register'
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)))
 
 ReactDOM.render(
   <Provider store={store}>
-    <TodoApp />
+    <BrowserRouter>
+      <div>
+        <Route path='/login' component={Login}></Route>
+        <Route path='/register' component={Register}></Route>
+      </div>
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 )
-// import App from './App'
-// import store, {doAdd, doReduce, doAddAsync} from './index.redux'
-
-// function render() {
-//   ReactDOM.render(
-//     <App
-//       store={store}
-//       doAdd={doAdd}
-//       doReduce={doReduce}
-//       doAddAsync={doAddAsync}
-//     />,
-//     document.getElementById('root')
-//   )
-// }
-// render()
-// store.subscribe(render)
-
