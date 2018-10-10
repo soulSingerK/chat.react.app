@@ -5,9 +5,9 @@ import axios from 'axios'
 
 class Login extends React.Component {
   componentDidMount() {
-    axios.get('/user').then(res => {
-      console.log(res)
-    })
+    // axios.get('/user').then(res => {
+    //   console.log(res)
+    // })
   }
   onRegister() {
     this.props.history.push('/register')

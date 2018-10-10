@@ -7,7 +7,6 @@ axios.interceptors.request.use(function(config) {
 })
 
 axios.interceptors.response.use(function(config) {
-  console.log(config)
   Toast.hide()
   if (config.status === 200) {
     return config.data
