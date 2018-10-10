@@ -17,10 +17,11 @@ const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)))
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <div>
+      <Switch>
         <Route path='/login' component={Login}></Route>
         <Route path='/register' component={Register}></Route>
-      </div>
+        <Redirect from="/*" to="/login"></Redirect>
+      </Switch>
     </BrowserRouter>
   </Provider>,
   document.getElementById('root')

@@ -41,6 +41,13 @@ app.get('/', (req, res) => {
   })
 })
 
+app.get('/user', (req, res) => {
+  let user = {
+    name: 'shisan'
+  }
+  res.json(user)
+})
+
 app.listen(3036, () => {
   console.log(`run on the port 3036`)
 })
