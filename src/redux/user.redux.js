@@ -1,7 +1,6 @@
 import axios from 'axios'
+import { USER, COMMON } from './actions.types'
 
-const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
-const ERROR_MSG = 'ERROR_MSG'
 
 const initState = {
   user: '',
@@ -11,17 +10,17 @@ const initState = {
   pwd: ''
 }
 
+// reducers 
 function user(state = initState, action) {
   switch (action.type) {
-    case REGISTER_SUCCESS:
+    case USER.REGISTER_SUCCESS:
       return {
         ...state,
         ...action.paylod,
         msg: '',
         isAuth: true
       }
-    case ERROR_MSG:
-      console.log('error')
+    case COMMON.ERROR_MSG:
       return {
         ...state,
         msg: action.msg,
@@ -32,16 +31,18 @@ function user(state = initState, action) {
   }
 }
 
+// actions
 function errorMsg (msg) {
   return {
     msg,
-    type: ERROR_MSG
+    type: COMMON.ERROR_MSG
   }
 }
 
+// handle
 function registerSuccess (data) {
   return {
-    type: REGISTER_SUCCESS,
+    type: USER.REGISTER_SUCCESS,
     paylod: data
   }
 }

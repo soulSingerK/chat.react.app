@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import Logo from '../../component/logo/logo'
-import { List, InputItem, WingBlank, WhiteSpace, Button, Radio } from 'antd-mobile'
+import { List, InputItem, WhiteSpace, Button, Radio } from 'antd-mobile'
 import { register } from '../../redux/user.redux'
 
 @connect(
@@ -40,17 +40,23 @@ class Register extends React.Component {
         <List>
           <InputItem
             onChange={(val) => this.handleChange('user', val)}  
-          >用户名</InputItem>
+          >
+            用户名
+          </InputItem>
           <WhiteSpace />
           <InputItem
             type='password'
             onChange={val => this.handleChange('pwd', val)}
-          >密码</InputItem>
+          >
+            密码
+          </InputItem>
           <WhiteSpace />
           <InputItem
             type='password'
             onChange={val => this.handleChange('repeatpwd', val)}
-          >确认密码</InputItem>
+          >
+            确认密码
+          </InputItem>
           <WhiteSpace/>
           <RadioItem 
             checked={this.state.type === 'genius'}

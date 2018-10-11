@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
-import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Redirect } from 'react-router-dom'
 
 import reducers from './reducers'
 import './axios.config'
@@ -28,7 +28,7 @@ ReactDOM.render(
         <Route path="/boss" component={Boss}></Route>
         <Route path='/login' component={Login}></Route>
         <Route path='/register' component={Register}></Route>
-        {/* <Redirect from="/*" to="/login"></Redirect> */}
+        <Redirect exact from="/" to="/login"></Redirect>
       </div>
     </BrowserRouter>
   </Provider>,
