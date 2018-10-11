@@ -55,16 +55,16 @@ export function register({ user, pwd, repeatpwd, type }) {
     return errorMsg('密码和确认密码不同')
   }
 
-  axios.post('/user/register', { user, pwd, type }).then(res => {
-    
-    return dispatch => {
-      if (res.code === 0) {
-        dispatch(registerSuccess({ user, pwd, type }))
-      } else {
-        dispatch(errorMsg(res.msg))
-      }
-    }
-  })
+  return dispatch => {
+    axios.post('/user/register', {user, pwd, type })
+      .then(res => {
+        if (res.code === 0) {
+          dispatch(registerSuccess({ user, pwd, type }))
+        } else {
+          dispatch(errorMsg(res.msg))
+        }
+      })
+  }
 }
 
 export default user
