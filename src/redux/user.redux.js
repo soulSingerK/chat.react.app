@@ -1,13 +1,14 @@
 import axios from 'axios'
 import { USER, COMMON } from './actions.types'
-
+import { getRedirectPath } from '../util'
 
 const initState = {
   user: '',
   isAuth: false,
   msg: '',
   type: '',
-  pwd: ''
+  pwd: '',
+  redirectTo:''
 }
 
 // reducers 
@@ -16,9 +17,18 @@ function user(state = initState, action) {
     case USER.REGISTER_SUCCESS:
       return {
         ...state,
-        ...action.paylod,
+        ...action.payload,
         msg: '',
-        isAuth: true
+        isAuth: true,
+        redirectTo: getRedirectPath(action.payload)
+      }
+    case USER.LOGIN_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+        msg: '',
+        isAuth: true,
+        redirectTo: getRedirectPath(action.payload)
       }
     case COMMON.ERROR_MSG:
       return {
@@ -43,10 +53,35 @@ function errorMsg (msg) {
 function registerSuccess (data) {
   return {
     type: USER.REGISTER_SUCCESS,
-    paylod: data
+    payload: data
   }
 }
 
+function loginSuccess (data) {
+  return {
+    type: USER.LOGIN_SUCCESS,
+    payload: data
+  }
+}
+
+// 登录
+export function login ({user, pwd}) {
+  if (!user || !pwd) {
+    return errorMsg('用户名和密码必须输入')
+  }
+  return dispatch => {
+    axios.post('/user/login', { user, pwd })
+      .then(res => {
+        if (res.code === 0) {
+          dispatch(loginSuccess(res.data))
+        } else {
+          dispatch(errorMsg(res.msg))
+        }
+      })
+  }
+}
+
+// 注册
 export function register({ user, pwd, repeatpwd, type }) {
   if (!user || !pwd || !repeatpwd) {
     return errorMsg('用户名和密码必须输入')
