@@ -7,7 +7,6 @@ const initState = {
   isAuth: false,
   msg: '',
   type: '',
-  pwd: '',
   redirectTo:''
 }
 
@@ -29,6 +28,11 @@ function user(state = initState, action) {
         msg: '',
         isAuth: true,
         redirectTo: getRedirectPath(action.payload)
+      }
+    case USER.LOAD_DATA: 
+      return {
+        ...state,
+        ...action.payload
       }
     case COMMON.ERROR_MSG:
       return {
@@ -60,6 +64,13 @@ function registerSuccess (data) {
 function loginSuccess (data) {
   return {
     type: USER.LOGIN_SUCCESS,
+    payload: data
+  }
+}
+
+export function loadData (data) {
+  return {
+    type: USER.LOAD_DATA,
     payload: data
   }
 }

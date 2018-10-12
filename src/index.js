@@ -28,7 +28,6 @@ ReactDOM.render(
         <Route path="/boss" component={Boss}></Route>
         <Route path='/login' component={Login}></Route>
         <Route path='/register' component={Register}></Route>
-        <Redirect exact from="/" to="/login"></Redirect>
       </div>
     </BrowserRouter>
   </Provider>,
