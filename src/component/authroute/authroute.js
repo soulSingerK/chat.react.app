@@ -7,7 +7,6 @@ class AuthRoute extends React.Component {
   componentDidMount() {
     const routeList = ['/login', '/register']
     axios.get('/user/info').then(res => {
-      console.log(res)
       if (res.code === 1) {
         const pathname = this.props.location.pathname
         if (routeList.indexOf(pathname) > -1) {
