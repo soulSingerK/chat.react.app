@@ -4,7 +4,6 @@ import { getRedirectPath } from '../util'
 
 const initState = {
   user: '',
-  isAuth: false,
   msg: '',
   type: '',
   redirectTo:''
@@ -13,20 +12,11 @@ const initState = {
 // reducers 
 function user(state = initState, action) {
   switch (action.type) {
-    case USER.REGISTER_SUCCESS:
+    case USER.AUTHSUCCESS:
       return {
         ...state,
         ...action.payload,
         msg: '',
-        isAuth: true,
-        redirectTo: getRedirectPath(action.payload)
-      }
-    case USER.LOGIN_SUCCESS:
-      return {
-        ...state,
-        ...action.payload,
-        msg: '',
-        isAuth: true,
         redirectTo: getRedirectPath(action.payload)
       }
     case USER.LOAD_DATA: 
@@ -53,25 +43,31 @@ function errorMsg (msg) {
   }
 }
 
-// handle
-function registerSuccess (data) {
-  return {
-    type: USER.REGISTER_SUCCESS,
-    payload: data
-  }
-}
-
-function loginSuccess (data) {
-  return {
-    type: USER.LOGIN_SUCCESS,
-    payload: data
-  }
-}
-
 export function loadData (data) {
   return {
     type: USER.LOAD_DATA,
     payload: data
+  }
+}
+
+// handle
+function authSuccess (data) {
+  return {
+    type: USER.AUTHSUCCESS,
+    payload: data
+  }
+}
+
+export function update(data) {
+  return dispatch => {
+    axios.post('/user/update', data)
+      .then(res => {
+        if (res.code === 0) {
+          dispatch(authSuccess(res.data))
+        } else {
+          dispatch(errorMsg(res.msg))
+        }
+      })
   }
 }
 
@@ -84,7 +80,7 @@ export function login ({user, pwd}) {
     axios.post('/user/login', { user, pwd })
       .then(res => {
         if (res.code === 0) {
-          dispatch(loginSuccess(res.data))
+          dispatch(authSuccess(res.data))
         } else {
           dispatch(errorMsg(res.msg))
         }
@@ -105,7 +101,7 @@ export function register({ user, pwd, repeatpwd, type }) {
     axios.post('/user/register', {user, pwd, type })
       .then(res => {
         if (res.code === 0) {
-          dispatch(registerSuccess({ user, pwd, type }))
+          dispatch(authSuccess({ user, pwd, type }))
         } else {
           dispatch(errorMsg(res.msg))
         }

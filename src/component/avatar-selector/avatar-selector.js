@@ -9,12 +9,6 @@ class AvatarSelector extends React.Component {
     }
   }
 
-  handleAvatarSelector(val) {
-    this.setState({
-      avatar: val.icon
-    })
-  }
-
   render() {
     const avatarList = 'boy,girl,man,woman,bull,chick,crab,hedgehog,hippopotamus,koala,lemur,pig,tiger,whale,zebra'
     const gridData = avatarList.split(',').map(name => {
@@ -35,7 +29,11 @@ class AvatarSelector extends React.Component {
       <List renderHeader={() => gridHeader}>
         <Grid 
           data={gridData}
-          onClick={(val) => this.handleAvatarSelector(val)}
+          onClick={(val) => {
+            this.setState({ avatar: val.icon })
+            this.props.handleAvatar(val.name)
+            }
+          }
           columnNum={5}
         >
         </Grid>

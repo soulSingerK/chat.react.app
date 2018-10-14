@@ -13,6 +13,19 @@ Router.get('/list', (req, res) => {
   })
 })
 
+Router.post('/update', (req, res) => {
+  const userid = req.cookies.userid
+  if (!userid) {
+    return res.json({ code: 1 })
+  }
+  const body = req.body
+  User.findOneAndUpdate({ _id: userid }, body, (err, doc) => {
+    if (err) return res.json({ code: 1, msg: '后端出错' })
+    const data = Object.assign({}, { user: doc.user, type: doc.type }, req.body)
+    return res.json({ code: 0, data })
+  })
+})
+
 Router.post('/login', (req, res) => {
   const { user, pwd } = req.body
   User.findOne({ user, pwd: md5Pwd(pwd) }, filter, (err, doc) => {
