@@ -12,6 +12,7 @@ import './index.css'
 import Login from './container/login/login'
 import Register from './container/register/register'
 import BossInfo from './container/bossinfo/bossinfo'
+import GeniusInfo from './container/geniusinfo/geniusinfo'
 import AuthRoute from './component/authroute/authroute'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
@@ -23,6 +24,7 @@ ReactDOM.render(
       <div>
         <AuthRoute></AuthRoute>
         <Route path="/bossinfo" component={BossInfo}></Route>
+        <Route path="/geniusinfo" component={GeniusInfo}></Route>
         <Route path='/login' component={Login}></Route>
         <Route path='/register' component={Register}></Route>
       </div>
