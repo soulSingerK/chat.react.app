@@ -6,3 +6,7 @@ export const USER = {
 export const COMMON = {
   ERROR_MSG: 'ERROR_MSG'
 }
+
+export const USERCHAT = {
+  USER_LIST: 'USER_LIST'
+}
