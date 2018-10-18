@@ -8,8 +8,9 @@ const filter = { pwd: 0, __v: 0 }
 
 Router.get('/list', (req, res) => {
   // User.remove({}, () => {})
-  User.find({}, (err, doc) => {
-    res.json(doc)
+  const { type } = req.query
+  User.find({type}, filter, (err, doc) => {
+    res.json({ code: 0, data: doc })
   })
 })
 

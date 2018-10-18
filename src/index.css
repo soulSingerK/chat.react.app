@@ -7,8 +7,8 @@
   bottom: 0;
   width: 100%;
 }
-/* 
-.am-navbar {
+
+.fixed-navbar .am-navbar {
   position: fixed;
   top: 0;
   width: 100%;
@@ -16,4 +16,4 @@
 
 .page-content {
   padding: 45px 5px;
-} */
+}
