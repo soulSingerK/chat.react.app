@@ -22,7 +22,8 @@ export function chat(state=initState, action) {
     case RECIVE_MSG:
       return {
         ...state,
-        msgList: [...state.msgList, action.payload]
+        msgList: [...state.msgList, action.payload],
+        unread: state.unread + 1
       }
     case MSG_READ:
     default:

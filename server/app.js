@@ -11,8 +11,11 @@ const server = require('http').Server(app)
 const io = require('socket.io')(server)
 io.on('connection', (socket) => {
   console.log('be connect')
+  // Chat.remove({}, () => {})
   socket.on('sendmsg', (data) => {
-    Chat.create(data, (err, doc) => {
+    const { from, to, content } = data
+    const chatid = [from, to].sort().join('_')
+    Chat.create({ chatid, from, to, content }, (err, doc) => {
       if (err) {
         // return res.json({ code: 1, msg: '后端出错了' })
         return console.log('error')
