@@ -9,6 +9,7 @@ const filter = { pwd: 0, __v: 0 }
 
 Router.get('/list', (req, res) => {
   // User.remove({}, () => {})
+  // Chat.remove({}, () => {})
   const { type } = req.query
   User.find({type}, filter, (err, doc) => {
     res.json({ code: 0, data: doc })
@@ -17,10 +18,19 @@ Router.get('/list', (req, res) => {
 
 Router.get('/getmsglist', (req, res) => {
   // const user = req.cookies
-  Chat.find({}, (err, doc) => {
-    if (!err) {
-      res.json({ code: 0, msgs: doc })
+  User.find({}, (err, doc) => {
+    if (err) {
+      res.json({ code: 1, msg: '出错' })
     }
+    const users = {}
+    doc.forEach(item => {
+      users[item._id] = { user: item.user, avatar: item.avatar }
+    })
+    Chat.find({}, (err, doc) => {
+      if (!err) {
+        res.json({ code: 0, msgs: doc, users: users })
+      }
+    })
   })
 })
 

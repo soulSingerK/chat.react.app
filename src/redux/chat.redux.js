@@ -8,6 +8,7 @@ const MSG_READ = 'MSG_READ'
 
 const initState = {
   msgList: [],
+  users: {},
   unread: 0
 }
 
@@ -16,8 +17,9 @@ export function chat(state=initState, action) {
     case MSG_LIST:
       return {
         ...state,
-        msgList: action.payload,
-        unread: action.payload.filter(item => !item.read).length
+        msgList: action.payload.msgs,
+        users: action.payload.users,
+        unread: action.payload.msgs.filter(item => !item.read).length
       }
     case RECIVE_MSG:
       return {
@@ -31,8 +33,8 @@ export function chat(state=initState, action) {
   }
 }
 
-function msgList(data) {
-  return { type: MSG_LIST, payload: data }
+function msgList(msgs, users) {
+  return { type: MSG_LIST, payload: {msgs, users} }
 }
 
 function reciveMsgFrom(msg) {
@@ -58,7 +60,7 @@ export function getMsgList() {
     axios.get('/user/getmsglist')
       .then(res => {
         if (res.code === 0) {
-          dispatch(msgList(res.msgs))
+          dispatch(msgList(res.msgs, res.users))
         }
       })
   }

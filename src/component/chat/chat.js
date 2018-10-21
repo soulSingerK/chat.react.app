@@ -1,17 +1,24 @@
 import React from 'react'
-import { List, InputItem, NavBar } from 'antd-mobile'
+import { List, InputItem, NavBar, Icon } from 'antd-mobile'
 import { connect } from 'react-redux'
-import { sendMsg } from '../../redux/chat.redux'
+import { sendMsg, getMsgList, reciveMsg } from '../../redux/chat.redux'
 
 @connect(
   state => state,
-  { sendMsg }
+  { sendMsg, reciveMsg, getMsgList }
 )
 class Chat extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = { text: '' }
+  }
+
+  componentDidMount() {
+    if (!this.props.chat.msgList.length) {
+      this.props.getMsgList()
+      this.props.reciveMsg()
+    }
   }
 
   handleSubmit() {
@@ -25,18 +32,31 @@ class Chat extends React.Component {
   render() {
     const chat = this.props.chat
     const showList = chat.msgList.filter(item => item.content)
-    const user = this.props.match.params.user
+    const userid = this.props.match.params.user
     const Item = List.Item
+    const users = chat.users
+    if (!users[userid]) {
+      return null
+    }
     return (
       <div id="chat-page">
-        <NavBar mode="dark">{user}</NavBar>
+        <NavBar
+          mode="dark"
+          icon={<Icon type="left" />}
+          onLeftClick={() => {
+            this.props.history.goBack()
+          }}
+        >{users[userid].user}</NavBar>
         { showList.map(v => {
-            return v.from === user ? 
+          console.log(v)
+          console.log(users, users[v.from], v.from)
+            const avatar = require(`../../assets/${users[v.from].avatar}.png`)
+            return v.from === userid ? 
             (<List key={v._id}>
-               <Item>{v.content}</Item>
+               <Item thumb={avatar}>{v.content}</Item>
             </List>) :
             <List className="chat-me" key={v._id}>
-              <Item>{v.content}</Item>
+              <Item extra={<img src={avatar} alt=""/>}>{v.content}</Item>
             </List>
           })
         }
