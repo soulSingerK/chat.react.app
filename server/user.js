@@ -4,6 +4,7 @@ const util = require('utility')
 
 const Router = express.Router()
 const User = models.getModel('user')
+const Chat = models.getModel('chat')
 const filter = { pwd: 0, __v: 0 }
 
 Router.get('/list', (req, res) => {
@@ -11,6 +12,15 @@ Router.get('/list', (req, res) => {
   const { type } = req.query
   User.find({type}, filter, (err, doc) => {
     res.json({ code: 0, data: doc })
+  })
+})
+
+Router.get('/getmsglist', (req, res) => {
+  // const user = req.cookies
+  Chat.find({}, (err, doc) => {
+    if (!err) {
+      res.json({ code: 0, msgs: doc })
+    }
   })
 })
 
