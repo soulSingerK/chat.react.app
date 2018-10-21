@@ -39,7 +39,7 @@ class Login extends React.Component {
         <Logo></Logo>
         <h2 style={{textAlign: 'center'}}> 登录页 </h2>
         { this.props.msg ? <p className="error-msg">{this.props.msg}</p> : null}
-        { this.props.redirectTo ? <Redirect to={this.props.redirectTo}/> : null }
+        { this.props.redirectTo && this.props.redirectTo !== '/login' ? <Redirect to={this.props.redirectTo}/> : null }
         <WingBlank>
           <List>
             <InputItem

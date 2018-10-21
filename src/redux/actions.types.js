@@ -1,6 +1,7 @@
 export const USER = {
   LOAD_DATA: 'LOAD_DATA',
-  AUTHSUCCESS: 'AUTHSUCCESS'
+  AUTHSUCCESS: 'AUTHSUCCESS',
+  LOGOUT: 'LOGOUT'
 }
 
 export const COMMON = {

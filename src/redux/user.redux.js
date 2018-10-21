@@ -30,6 +30,11 @@ function user(state = initState, action) {
         msg: action.msg,
         isAuth: false
       }
+    case USER.LOGOUT:
+      return {
+        ...initState,
+        redirectTo: '/login'
+      }
     default:
       return state
   }
@@ -48,6 +53,10 @@ export function loadData (data) {
     type: USER.LOAD_DATA,
     payload: data
   }
+}
+
+export function userLogout() {
+  return { type: USER.LOGOUT }
 }
 
 // handle

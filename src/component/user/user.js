@@ -2,9 +2,13 @@ import React from 'react'
 import { List, Result, WhiteSpace, Modal } from 'antd-mobile'
 import { connect } from 'react-redux'
 import browserCookies from 'browser-cookies'
+import { Redirect } from 'react-router-dom'
+
+import { userLogout } from '../../redux/user.redux'
 
 @connect(
-  state => state.user
+  state => state.user,
+  { userLogout }
 )
 class User extends React.Component {
 
@@ -17,7 +21,7 @@ class User extends React.Component {
       {
         text: '确定', onPress: () => {
           browserCookies.erase('userid')
-          window.location.href = window.location.href
+          this.props.userLogout()
         }
       }
     ])
@@ -48,7 +52,7 @@ class User extends React.Component {
           </Item>
         </List>
       </div>
-    ) : null
+    ) : <Redirect to={ props.redirectTo }/>
   }
 }
 
