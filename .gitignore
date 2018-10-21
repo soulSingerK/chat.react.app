@@ -24,4 +24,4 @@ yarn-error.log*
   name = soulSingerK 
   email = 425139963@qq.com 
 [credential] 
-  helper = store 
+  helper = winstore 
