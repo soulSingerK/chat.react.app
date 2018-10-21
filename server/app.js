@@ -6,8 +6,11 @@ const app = express()
 
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
-io.on('connection', () => {
+io.on('connection', (socket) => {
   console.log('be connect')
+  socket.on('sendmsg', (data) => {
+    io.emit('recivemsg', data)
+  })
 })
 
 app.use(cookieParser())
