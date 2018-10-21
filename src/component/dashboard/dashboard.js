@@ -21,8 +21,10 @@ function Msg() {
 class Dashboard extends React.Component {
 
   componentDidMount() {
-    this.props.getMsgList()
-    this.props.reciveMsg()
+    if (!this.props.chat.msgList.length) {
+      this.props.getMsgList()
+      this.props.reciveMsg()
+    }
   }
 
   render() {

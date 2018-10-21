@@ -17,7 +17,7 @@ Router.get('/list', (req, res) => {
 })
 
 Router.get('/getmsglist', (req, res) => {
-  // const user = req.cookies
+  const userid = req.cookies.userid
   User.find({}, (err, doc) => {
     if (err) {
       res.json({ code: 1, msg: '出错' })
@@ -26,7 +26,7 @@ Router.get('/getmsglist', (req, res) => {
     doc.forEach(item => {
       users[item._id] = { user: item.user, avatar: item.avatar }
     })
-    Chat.find({}, (err, doc) => {
+    Chat.find({'$or': [{ from: userid }, { to: userid }]}, (err, doc) => {
       if (!err) {
         res.json({ code: 0, msgs: doc, users: users })
       }
