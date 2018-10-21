@@ -1,21 +1,17 @@
 import React from 'react'
 import { List, InputItem, NavBar } from 'antd-mobile'
 import { connect } from 'react-redux'
-import { getMsgList, sendMsg, reciveMsg } from '../../redux/chat.redux'
+import { sendMsg } from '../../redux/chat.redux'
 
 @connect(
   state => state,
-  { getMsgList, sendMsg, reciveMsg }
+  { sendMsg }
 )
 class Chat extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = { text: '' }
-  }
-  componentDidMount() {
-    this.props.getMsgList()
-    this.props.reciveMsg()
   }
 
   handleSubmit() {
