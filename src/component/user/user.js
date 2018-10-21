@@ -1,11 +1,28 @@
 import React from 'react'
-import { List, Result } from 'antd-mobile'
+import { List, Result, WhiteSpace, Modal } from 'antd-mobile'
 import { connect } from 'react-redux'
+import browserCookies from 'browser-cookies'
 
 @connect(
   state => state.user
 )
 class User extends React.Component {
+
+  logout() {
+    const alert = Modal.alert
+    alert('注销', '确定退出登录吗？', [
+      {
+        text: '取消', onPress: () => console.log('cancel')
+      },
+      {
+        text: '确定', onPress: () => {
+          browserCookies.erase('userid')
+          window.location.href = window.location.href
+        }
+      }
+    ])
+  }
+
   render() {
     const Item = List.Item
     const Brief = Item.Brief
@@ -24,8 +41,9 @@ class User extends React.Component {
             { props.money ? <Brief>薪资：{props.money}</Brief> : null }
           </Item>
         </List>
+        <WhiteSpace></WhiteSpace>
         <List>
-          <Item>
+          <Item onClick={() => this.logout()}>
             退出登录
           </Item>
         </List>
