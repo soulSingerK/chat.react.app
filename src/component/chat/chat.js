@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, InputItem, NavBar, Icon } from 'antd-mobile'
+import { List, InputItem, NavBar, Icon, Grid } from 'antd-mobile'
 import { connect } from 'react-redux'
 import { sendMsg, getMsgList, reciveMsg } from '../../redux/chat.redux'
 import { getChatId } from '../../util'
@@ -12,7 +12,7 @@ class Chat extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = { text: '' }
+    this.state = { text: '', emojiShow: false }
   }
 
   componentDidMount() {
@@ -22,17 +22,26 @@ class Chat extends React.Component {
     }
   }
 
+  fixCarousel() {
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'))
+    }, 0)
+  }
+
   handleSubmit() {
     const from = this.props.user._id
     const to = this.props.match.params.user
     const content = this.state.text
     this.props.sendMsg({ from, to, msg: content })
-    this.setState({ text: '' })
+    this.setState({ text: '', emojiShow: false })
   }
 
   render() {
     const chat = this.props.chat
-    // const showList = chat.msgList.filter(item => item.content)
+    const emoji = '😀 😁 😂 🤣 😃 😄 😅 😆 😉 😊 😋 😎 😍 😘 😗 😙 😚 😣 😓 😳 🤓 😺 👨‍🍳 💂 👩‍ 🧛‍ 🙅‍ 🚶‍ 🙆‍'
+      .split(' ')
+      .filter(v => v)
+      .map(item => ({ text: item }))
     const userid = this.props.match.params.user
     const Item = List.Item
     const users = chat.users
@@ -68,9 +77,33 @@ class Chat extends React.Component {
               onChange={ v => {
                 this.setState({ text: v })
               }}
-              extra={<span onClick={() => this.handleSubmit()}>发送</span>}
+              extra={
+                <div>
+                  <span
+                    style={{marginRight: 10}}
+                    onClick={() => {
+                      this.setState({ emojiShow: !this.state.emojiShow })
+                      this.fixCarousel()
+                    }}
+                  >😀</span>
+                  <span onClick={() => this.handleSubmit()}>发送</span>
+                </div>
+              }
             ></InputItem>
           </List>
+          { this.state.emojiShow ? 
+            <Grid
+              data={emoji}
+              columnNum={6}
+              carouselMaxRow={4}
+              isCarousel={true}
+              onClick={(v) => {
+                this.setState({
+                  text: this.state.text + v.text
+                })
+              }}
+            /> : null
+          }
         </div>
       </div>
     )
