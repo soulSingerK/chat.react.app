@@ -19,7 +19,13 @@
   padding: 45px 5px;
 }
 
-.stick-footer {
+#chat-page .am-navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+#chat-page .stick-footer {
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -40,4 +46,13 @@
 }
 #chat-page .am-grid-text {
   margin-top: 0;
+}
+#chat-page {
+  display: flex;
+  flex-direction: column;
+}
+#chat-page .chat-list {
+  flex: 1;
+  margin-top: 45px;
+  margin-bottom: 44px;
 }

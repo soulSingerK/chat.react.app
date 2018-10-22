@@ -58,17 +58,19 @@ class Chat extends React.Component {
             this.props.history.goBack()
           }}
         >{users[userid].user}</NavBar>
-        { showList.map(v => {
-            const avatar = require(`../../assets/${users[v.from].avatar}.png`)
-            return v.from === userid ? 
-            (<List key={v._id}>
-               <Item thumb={avatar}>{v.content}</Item>
-            </List>) :
-            <List className="chat-me" key={v._id}>
-              <Item extra={<img src={avatar} alt=""/>}>{v.content}</Item>
-            </List>
-          })
-        }
+        <div className="chat-list">
+          { showList.map(v => {
+              const avatar = require(`../../assets/${users[v.from].avatar}.png`)
+              return v.from === userid ? 
+              (<List key={v._id}>
+                <Item thumb={avatar}>{v.content}</Item>
+              </List>) :
+              <List className="chat-me" key={v._id}>
+                <Item extra={<img src={avatar} alt=""/>}>{v.content}</Item>
+              </List>
+            })
+          }
+        </div>
         <div className="stick-footer">
           <List>
             <InputItem
