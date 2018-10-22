@@ -17,7 +17,11 @@ class Msg extends React.Component {
       chatMap[item.chatid] = chatMap[item.chatid] || []
       chatMap[item.chatid].push(item)
     })
-    const chatList = Object.values(chatMap)
+    const chatList = Object.values(chatMap).sort((a,b) => {
+      const a_lastTime = this.getLast(a).create_time
+      const b_lastTime = this.getLast(b).create_time
+      return b_lastTime - a_lastTime
+    })
     const Item = List.Item
     const Brief = Item.Brief
     const userid = this.props.user._id
@@ -33,6 +37,10 @@ class Msg extends React.Component {
             <Item
               thumb={require(`../../assets/${userInfo[targetId].avatar}.png`)}
               extra={<Badge text={unread}></Badge>}
+              arrow="horizontal"
+              onClick={() => {
+                this.props.history.push(`/chat/${targetId}`)
+              }}
             >
               { userInfo[targetId].user }
               <Brief>{showMsg.content}</Brief>
