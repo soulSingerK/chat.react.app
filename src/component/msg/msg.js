@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { List } from 'antd-mobile'
+import { List, Badge } from 'antd-mobile'
 
 @connect(
   state => state
@@ -26,11 +26,13 @@ class Msg extends React.Component {
       chatList.map(item => {
         const showMsg = this.getLast(item)
         const targetId = item[0].from === userid ? item[0].to : item[0].from
+        const unread = item.filter(v => !v.read && v.to === userid).length
         if (!userInfo[targetId]) return null
         return (
           <List key={showMsg._id}>
             <Item
               thumb={require(`../../assets/${userInfo[targetId].avatar}.png`)}
+              extra={<Badge text={unread}></Badge>}
             >
               { userInfo[targetId].user }
               <Brief>{showMsg.content}</Brief>
