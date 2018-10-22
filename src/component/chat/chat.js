@@ -1,12 +1,12 @@
 import React from 'react'
 import { List, InputItem, NavBar, Icon, Grid } from 'antd-mobile'
 import { connect } from 'react-redux'
-import { sendMsg, getMsgList, reciveMsg } from '../../redux/chat.redux'
+import { sendMsg, getMsgList, reciveMsg, readMsg } from '../../redux/chat.redux'
 import { getChatId } from '../../util'
 
 @connect(
   state => state,
-  { sendMsg, reciveMsg, getMsgList }
+  { sendMsg, reciveMsg, getMsgList, readMsg }
 )
 class Chat extends React.Component {
 
@@ -20,6 +20,11 @@ class Chat extends React.Component {
       this.props.getMsgList()
       this.props.reciveMsg()
     }
+  }
+
+  componentWillUnmount() {
+    const to = this.props.match.params.user
+    this.props.readMsg(to)
   }
 
   fixCarousel() {
