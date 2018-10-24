@@ -87,6 +87,8 @@ class Chat extends React.Component {
               extra={
                 <div>
                   <span
+                    role="img"
+                    aria-label="123"
                     style={{marginRight: 10}}
                     onClick={() => {
                       this.setState({ emojiShow: !this.state.emojiShow })
