@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, InputItem, NavBar, Icon, Grid } from 'antd-mobile'
+import { List, InputItem, NavBar, Icon, Grid, Toast } from 'antd-mobile'
 import { connect } from 'react-redux'
 import { sendMsg, getMsgList, reciveMsg, readMsg } from '../../redux/chat.redux'
 import { getChatId } from '../../util'
@@ -34,9 +34,12 @@ class Chat extends React.Component {
   }
 
   handleSubmit() {
+    const content = this.state.text
+    if (content === '') {
+      return Toast.info('发送内容不得为空', 1)
+    }
     const from = this.props.user._id
     const to = this.props.match.params.user
-    const content = this.state.text
     this.props.sendMsg({ from, to, msg: content })
     this.setState({ text: '', emojiShow: false })
   }
@@ -83,6 +86,9 @@ class Chat extends React.Component {
               value={this.state.text}
               onChange={ v => {
                 this.setState({ text: v })
+              }}
+              onKeyUp={(e) => {
+                e.keyCode === 13 && this.handleSubmit()
               }}
               extra={
                 <div>
